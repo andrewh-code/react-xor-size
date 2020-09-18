@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+Button.bodyPart:active {
+  background-color: yellow;
+}
