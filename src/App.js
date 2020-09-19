@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -7,63 +7,92 @@ import Container from '@material-ui/core/Container';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import { Checkbox, FormGroup, FormControlLabel } from '@material-ui/core';
 
-function App() {
-  
-  const styles = {
-    container: {
-      background: '50%',
-      backgroundColor: fade('#D6D9D6', 0.5),
-      height: '100vh'
-    }
+export class App extends Component {
+
+  state = {
+    checkedB: false
   }
 
-  return (
-    <Container fixed style={styles.container}>
-      
-      <Grid container spacing={4}>
+  handleChange = (e) => {
+    this.setState({
+        ...this.state,
+        [e.target.name]: e.target.checked
+    })
+    console.log(e.target.name);
+  }
 
-        <Grid item xs={12}>
-          Title and such
-        </Grid>
-        <Grid item xs={12}>
-          <Paper>
-            Upper Body
-            <Button className="bodyPart" variant="outlined" color="secondary">
-              Chest
-            </Button>
-            <Button className="bodyPart" variant="outlined" color="secondary">
-              Back
-            </Button>
-            <Button className="bodyPart" variant="outlined" color="secondary">
-              Arms
-            </Button>
-            <button>Regular Button</button>
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper>
-            Lower Body
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper>Cardio</Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Button variant="contained" color="primary">
-            Get Workout
-          </Button>
-        </Grid>
-        <Grid item xs={12}>
-          <textarea id="textareahtml" rows="4" cols="150" placeholder="view workout here..."></textarea>
-        </Grid>
-      </Grid>
+  render() {
 
-    </Container>
+    const styles = {
+      container: {
+        background: '50%',
+        backgroundColor: fade('#D6D9D6', 0.5),
+        height: '100vh'
+      }
+    }
 
+    return (
+      <Fragment>
+        <Container fixed style={styles.container}>
 
-    
-  );
+          <Grid container spacing={4}>
+
+            <Grid item xs={12}>
+              Title and such
+          </Grid>
+            <Grid item xs={12}>
+              <Paper>
+                <FormGroup row>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={this.state.checkedB}
+                        onChange={this.handleChange}
+                        name="checkedB"
+                        color="primary"
+                      />
+                    }
+                    label="Primary"
+                  />
+
+                </FormGroup>
+              </Paper>
+
+            </Grid>
+            <Grid item xs={12}>
+              <Paper>
+                Lower Body
+      </Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <Paper>Cardio</Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <Button variant="contained" color="primary">
+                Get Workout
+      </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <textarea id="textareahtml" rows="4" cols="150" placeholder="view workout here..."></textarea>
+            </Grid>
+          </Grid>
+
+        </Container>
+      </Fragment>
+    )
+  }
 }
 
-export default App;
+// export class App extends Component {
+//   render() {
+//     return (
+//       <div>
+        
+//       </div>
+//     )
+//   }
+// }
+
+export default App
