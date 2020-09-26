@@ -1,0 +1,15 @@
+/bodypart/{bodyPart}/exericses/{name or id}/
+
+
+
+
+
+// only really need one database table atm. Ntohing too fancy. No need for normalizing, not needed here
+create table exercise {
+    id serial,
+    exercisename varchar(200),
+    bodypart varchar(200),
+    description varchar(500),
+    link varchar(500),
+    tips jsonb
+}

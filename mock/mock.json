@@ -20,7 +20,7 @@
                 "exerciseName": "shoulder press",
                 "bodyPart": "shoulders",
                 "description": "exericse to work out muscles surrounding the shoulder",
-                "link": "www.youtube.com/shoulderpress"
+                "link": "www.youtube.com/shoulderpress",
                 "tips": ["squeeze glutes", "elbows angled, a bit forward"]
             }
         ]
@@ -46,7 +46,7 @@
                 "exerciseName": "single leg deadlift",
                 "bodyPart": "glutes",
                 "description": "unilateral exercise to help maintain balance and development of glute and hamstring muscles",
-                "link": "www.youtube.com/shoulderpress"
+                "link": "www.youtube.com/shoulderpress",
                 "tips": ["pull from the hamstrings on your way up", "weight is on opposte hand", "do not rotate hips, keep them straight"]
             }
         ]
@@ -55,8 +55,8 @@
         "bodyArea": "cardioPlyo",
         "exercises": [
             {
-                "exerciseName": "10 min tabatta"
-                "description": "sprint 100% for 20s, walk/jog for 10s. Repeat until 10 minutes is up"
+                "exerciseName": "10 min tabatta",
+                "description": "sprint 100% for 20s, walk/jog for 10s. Repeat until 10 minutes is up",
                 "bodyPart": "cardioPlyo",
                 "link": "www.youtube.com/tabatta",
                 "tips": []
