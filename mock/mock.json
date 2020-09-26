@@ -1,0 +1,67 @@
+[
+    {
+        "bodyArea":"upper body",
+        "exercises": [
+            {
+                "exerciseName": "bench press",
+                "bodyPart": "chest",
+                "description": "exercise to develop the main chest muscle, pectoralis major",
+                "link": "www.youtube.com/benchpress",
+                "tips": ["elbows at 45 degrees", "back arched", "feet planted"]
+            },
+            {
+                "exerciseName": "lat pulldown",
+                "bodyPart": "back",
+                "description": "exercise to work out the latissimus dorsi muscles in the back",
+                "link": "www.youtube.com/latpulldown",
+                "tips": ["squeeze the shoulder blades","look forward, not up"]
+            },
+            {
+                "exerciseName": "shoulder press",
+                "bodyPart": "shoulders",
+                "description": "exericse to work out muscles surrounding the shoulder",
+                "link": "www.youtube.com/shoulderpress"
+                "tips": ["squeeze glutes", "elbows angled, a bit forward"]
+            }
+        ]
+    },
+    {
+        "bodyArea":"lower body",
+        "exercises": [
+            {
+                "exerciseName": "back squat",
+                "bodyPart": "hips",
+                "description": "main compound lift to help develop and strengthen the hip/posterior chain",
+                "link": "www.youtube.com/back squat",
+                "tips": ["knee caps flare out to pinky toe", "push from the heals", "brace the core"]
+            },
+            {
+                "exerciseName": "single leg dumbbell lunge",
+                "bodyPart": "quads",
+                "description": "unilateral exercise focused on quadricep development",
+                "link": "www.youtube.com/lunge",
+                "tips": ["knees do not go past toes", "forward knee bent at 90 degrees", "look forward to maintain balance"]
+            },
+            {
+                "exerciseName": "single leg deadlift",
+                "bodyPart": "glutes",
+                "description": "unilateral exercise to help maintain balance and development of glute and hamstring muscles",
+                "link": "www.youtube.com/shoulderpress"
+                "tips": ["pull from the hamstrings on your way up", "weight is on opposte hand", "do not rotate hips, keep them straight"]
+            }
+        ]
+    },
+    {
+        "bodyArea": "cardioPlyo",
+        "exercises": [
+            {
+                "exerciseName": "10 min tabatta"
+                "description": "sprint 100% for 20s, walk/jog for 10s. Repeat until 10 minutes is up"
+                "bodyPart": "cardioPlyo",
+                "link": "www.youtube.com/tabatta",
+                "tips": []
+            }
+        ]
+    }
+]
+    
