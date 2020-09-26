@@ -38,6 +38,7 @@ export class App extends Component {
       [e.target.name]: e.target.checked
     })
     console.log(e.target.name);
+    console.log("hi");
   }
 
   render() {
@@ -47,19 +48,130 @@ export class App extends Component {
         background: '50%',
         backgroundColor: fade('#D6D9D6', 0.5),
         height: '100vh'
+      },
+      paper: {
+        textAlign: 'cetner'
       }
     }
 
     return (
       <Fragment>
-        <Container fixed style={styles.container}>
+        <div className="container-bg">
+          <div className="container">
+
+            <h3>Exercise Generator</h3>
+
+            <div className="row">
+              Upper Body
+            </div>
+            <div className="row">
+              <div className="col-sm-3">
+                <div className="form-check">
+                  <input type="checkbox" 
+                    className="form-check-input" 
+                    name="chestCheck" 
+                    checked={this.state.chestCheck}  
+                    onClick={this.handleChange}></input>
+                  <label className="form-check-label">Chest</label>
+                </div>
+              </div>
+              <div className="col-sm-3">
+              <div className="form-check">
+                  <input type="checkbox" 
+                    className="form-check-input" 
+                    name="backCheck" 
+                    checked={this.state.backCheck}  
+                    onClick={this.handleChange}></input>
+                  <label className="form-check-label">Back</label>
+                </div>
+              </div>
+              <div className="col-sm-3">
+                <div className="form-check">
+                <input type="checkbox" 
+                    className="form-check-input" 
+                    name="shoulderCheck" 
+                    checked={this.state.shoulderCheck}  
+                    onClick={this.handleChange}></input>
+                  <label className="form-check-label" for="exampleCheck1">Shoulders</label>
+                </div>
+              </div>
+              <div className="col-sm-3">
+                <div className="form-check">
+                <input type="checkbox" 
+                    className="form-check-input" 
+                    name="armsCheck" 
+                    checked={this.state.armsCheck}  
+                    onClick={this.handleChange}></input>
+                  <label className="form-check-label" for="exampleCheck1">Arms</label>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              Lower Body
+            </div>
+            <div className="row">
+              <div className="col-sm-3">
+                One of three columns
+              </div>
+              <div className="col-sm-3">
+                One of three columns
+              </div>
+              <div className="col-sm-3">
+                One of three columns
+              </div>
+              <div className="col-sm-3">
+                One of four columns
+              </div>
+            </div>
+
+            <div className="row">
+              Cardio/Plyo
+            </div>
+            <div className="row">
+              <div className="col-sm-3">
+                One of three columns
+              </div>
+              <div className="col-sm-3">
+                One of three columns
+              </div>
+              <div className="col-sm-3">
+                One of three columns
+              </div>
+              <div className="col-sm-3">
+                One of four columns
+              </div>
+            </div>
+            <div className="row">
+              <button type="button" class="btn btn-primary">Get Exercise</button>
+            </div>
+            <div classNam="row">
+              <div class="form-group">
+                <textarea class="form-control" 
+                          id="exampleFormControlTextarea1" 
+                          placeholder="get workout here..."
+                          rows="10"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Fragment>
+    )
+  }
+}
+
+export default App
+
+
+// put this in container
+/*
+<Container fixed style={styles.container}>
 
           <Grid container spacing={4}>
             <Grid item xs={12}>
               Exercise Generator
           </Grid>
-
-            <Grid item xs={12}>
+            <Grid item xs={12} >
               <Paper>
                 <h3>Upper Body</h3>
                 <FormGroup row>
@@ -226,19 +338,4 @@ export class App extends Component {
           </Grid>
 
         </Container>
-      </Fragment>
-    )
-  }
-}
-
-// export class App extends Component {
-//   render() {
-//     return (
-//       <div>
-
-//       </div>
-//     )
-//   }
-// }
-
-export default App
+        */

@@ -37,6 +37,13 @@
   }
 }
 
-Button.bodyPart:active {
-  background-color: yellow;
+
+
+.container {
+  background-color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
+
+.row {
+  text-align: center;
 }
