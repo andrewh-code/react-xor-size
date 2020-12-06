@@ -28,8 +28,9 @@ export class App extends Component {
     // cardio
     steadyStateCardioCheck: false,
     hiitCheck: false,
-    plyoCheck: false
+    plyoCheck: false,
 
+    testMsg: "hello"
   }
 
   handleChange = (e) => {
@@ -39,6 +40,14 @@ export class App extends Component {
     })
     console.log(e.target.name);
     console.log("hi");
+  }
+  
+  btnUpdate = () => {
+    this.setState({
+      testMsg: "has been changed..."
+    });
+    console.log("button has been pressed");
+    console.log(this.testMsg);
   }
 
   render() {
@@ -126,7 +135,7 @@ export class App extends Component {
               <div className="form-check">
                 <input type="checkbox" 
                     className="form-check-input" 
-                    name="armsCheck" 
+                    name="hamstringsCheck" 
                     checked={this.state.hamstringsCheck}  
                     onClick={this.handleChange}></input>
                   <label className="form-check-label" htmlFor="exampleCheck1">Hamstrings</label>
@@ -190,15 +199,20 @@ export class App extends Component {
               </div>
             </div>
             <hr></hr>
-            <div className="row" id="getExercises">
-              <button type="button" class="btn btn-primary">Get Exercise</button>
+            <div className="row justify-content-center" id="getExercises">
+              <button type="button" 
+                  className="btn btn-primary"
+                  onClick={this.btnUpdate}>
+
+                    Get Exercises
+              </button>
             </div>
-            <div classNam="row">
-              <div class="form-group">
-                <textarea class="form-control" 
+            <div className="row justify-content-center">
+              <div className="form-group">
+                <textarea className="form-control" 
                           id="exampleFormControlTextarea1" 
                           placeholder="get workout here..."
-                          rows="10"></textarea>
+                          rows="10" cols="100">{this.testMsg}</textarea>
               </div>
             </div>
           </div>

@@ -45,13 +45,23 @@
 .row {
   text-align: center;
   border: 1px;
-  padding-bottom: 2%;
-  padding-top: 2%;
+  padding-bottom: 1%;
+  padding-top: 1%;
   padding-left: 2%;
   padding-right: 2%;
 }
-
+.row#getExercises{
+  text-align: center;
+}
 hr#title {
   border-radius: 5px;
   width: 50%;
+}
+
+input[type=checkbox] {
+  transform: scale(2.0);
+}
+
+label.form-check-label {
+  padding-left: 5px;
 }
