@@ -60,11 +60,11 @@ export class App extends Component {
           <div className="container">
 
             <h3>Exercise Generator</h3>
-
-            <div className="row">
-              Upper Body
+            <hr id="title"></hr>
+            <div className="row border">
+            <h4>Upper Body</h4>
             </div>
-            <div className="row">
+            <div className="row border">
               <div className="col-sm-3">
                 <div className="form-check">
                   <input type="checkbox" 
@@ -92,7 +92,8 @@ export class App extends Component {
                     name="shoulderCheck" 
                     checked={this.state.shoulderCheck}  
                     onClick={this.handleChange}></input>
-                  <label className="form-check-label" for="exampleCheck1">Shoulders</label>
+                    {/* do I need htmlFor? */}
+                  <label className="form-check-label" htmlFor="exampleCheck1">Shoulders</label>
                 </div>
               </div>
               <div className="col-sm-3">
@@ -102,47 +103,94 @@ export class App extends Component {
                     name="armsCheck" 
                     checked={this.state.armsCheck}  
                     onClick={this.handleChange}></input>
-                  <label className="form-check-label" for="exampleCheck1">Arms</label>
+                  <label className="form-check-label" htmlFor="exampleCheck1">Arms</label>
                 </div>
               </div>
             </div>
 
             <div className="row">
-              Lower Body
+              <h4>Lower Body</h4>
             </div>
             <div className="row">
               <div className="col-sm-3">
-                One of three columns
+              <div className="form-check">
+                <input type="checkbox" 
+                    className="form-check-input" 
+                    name="quadsCheck" 
+                    checked={this.state.quadsCheck}  
+                    onClick={this.handleChange}></input>
+                  <label className="form-check-label" htmlFor="exampleCheck1">Quads</label>
+                </div>
               </div>
               <div className="col-sm-3">
-                One of three columns
+              <div className="form-check">
+                <input type="checkbox" 
+                    className="form-check-input" 
+                    name="armsCheck" 
+                    checked={this.state.hamstringsCheck}  
+                    onClick={this.handleChange}></input>
+                  <label className="form-check-label" htmlFor="exampleCheck1">Hamstrings</label>
+                </div>
               </div>
               <div className="col-sm-3">
-                One of three columns
+              <div className="form-check">
+                <input type="checkbox" 
+                    className="form-check-input" 
+                    name="glutesCheck" 
+                    checked={this.state.glutesCheck}  
+                    onClick={this.handleChange}></input>
+                  <label className="form-check-label" htmlFor="exampleCheck1">Glutes</label>
+                </div>
               </div>
               <div className="col-sm-3">
-                One of four columns
+              <div className="form-check">
+                <input type="checkbox" 
+                    className="form-check-input" 
+                    name="calvesCheck" 
+                    checked={this.state.calvesCheck}  
+                    onClick={this.handleChange}></input>
+                  <label className="form-check-label" htmlFor="exampleCheck1">Calves</label>
+                </div>
               </div>
             </div>
 
             <div className="row">
-              Cardio/Plyo
+              <h4>Cardio/Plyo</h4>
             </div>
             <div className="row">
-              <div className="col-sm-3">
-                One of three columns
+              <div className="col-sm-4">
+              <div className="form-check">
+                <input type="checkbox" 
+                    className="form-check-input" 
+                    name="steadyStateCheck" 
+                    checked={this.state.steadyStateCheck}  
+                    onClick={this.handleChange}></input>
+                  <label className="form-check-label" htmlFor="exampleCheck1">Steady State</label>
+                </div>
               </div>
-              <div className="col-sm-3">
-                One of three columns
+              <div className="col-sm-4">
+              <div className="form-check">
+                <input type="checkbox" 
+                    className="form-check-input" 
+                    name="hiitCheck" 
+                    checked={this.state.hiitCheck}  
+                    onClick={this.handleChange}></input>
+                  <label className="form-check-label" htmlFor="exampleCheck1">HIIT</label>
+                </div>
               </div>
-              <div className="col-sm-3">
-                One of three columns
-              </div>
-              <div className="col-sm-3">
-                One of four columns
+              <div className="col-sm-4">
+              <div className="form-check">
+                <input type="checkbox" 
+                    className="form-check-input" 
+                    name="plyoCheck" 
+                    checked={this.state.plyoCheck}  
+                    onClick={this.handleChange}></input>
+                  <label className="form-check-label" htmlFor="exampleCheck1">Plyometrics</label>
+                </div>
               </div>
             </div>
-            <div className="row">
+            <hr></hr>
+            <div className="row" id="getExercises">
               <button type="button" class="btn btn-primary">Get Exercise</button>
             </div>
             <div classNam="row">
