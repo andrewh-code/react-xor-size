@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import { Checkbox, FormGroup, FormControlLabel } from '@material-ui/core';
 
 export class App extends Component {
+  domain ="http://localhost:5000";
+  apiPath = "/api/v1/exercises"
 
   state = {
     // upper body
@@ -20,17 +22,20 @@ export class App extends Component {
     shouldersCheck: false,
 
     // lower body
-    hipsCheck: false,
+    glutesCheck: false,
     quadsCheck: false,
     hamstringsCheck: false,
     calvesCheck: false,
 
     // cardio
-    steadyStateCardioCheck: false,
+    steadyStateCheck: false,
     hiitCheck: false,
     plyoCheck: false,
 
-    testMsg: "hello"
+    exerciseOutput: "get workout here...",
+    results: null,
+    isCleared: true,
+    exercises: null
   }
 
   handleChange = (e) => {
@@ -41,13 +46,61 @@ export class App extends Component {
     console.log(e.target.name);
     console.log("hi");
   }
-  
-  btnUpdate = () => {
-    this.setState({
-      testMsg: "has been changed..."
+
+  handleTextAreaChange = () => {
+    console.log(this.state.exercises)
+  }
+
+  getExercises = () => {
+
+    const isCleared = this.state.isCleared;
+    const endpoint = this.domain + this.apiPath;
+    
+    // axios
+    if (isCleared){
+      axios.get(endpoint).then(serverResponse =>{
+        let data = serverResponse.data;       
+        this.processData(data.data)
+        this.setState({
+          exercises: data.data,
+          isCleared: false
+        });
+
+      }).catch((error) =>{
+          // parse error here
+      });
+    } 
+  }
+
+  processData = (data) => {
+    console.log(data)
+  }
+
+  clear = () => {
+    // clear all values
+    this.setState ({
+      // upper body
+    chestCheck: false,
+    backCheck: false,
+    armsCheck: false,
+    absCheck: false,
+    shouldersCheck: false,
+
+    // lower body
+    glutesCheck: false,
+    quadsCheck: false,
+    hamstringsCheck: false,
+    calvesCheck: false,
+
+    // cardio
+    steadyStateCheck: false,
+    hiitCheck: false,
+    plyoCheck: false,
+
+    exerciseOutput: "get workout here...",
+    exercises: null,
+    isCleared: true
     });
-    console.log("button has been pressed");
-    console.log(this.testMsg);
   }
 
   render() {
@@ -90,7 +143,8 @@ export class App extends Component {
                     className="form-check-input" 
                     name="backCheck" 
                     checked={this.state.backCheck}  
-                    onClick={this.handleChange}></input>
+                    onClick={this.handleChange}
+                    defaultChecked></input>
                   <label className="form-check-label">Back</label>
                 </div>
               </div>
@@ -98,9 +152,10 @@ export class App extends Component {
                 <div className="form-check">
                 <input type="checkbox" 
                     className="form-check-input" 
-                    name="shoulderCheck" 
-                    checked={this.state.shoulderCheck}  
-                    onClick={this.handleChange}></input>
+                    name="shouldersCheck" 
+                    checked={this.state.shouldersCheck}  
+                    onClick={this.handleChange}
+                    defaultChecked></input>
                     {/* do I need htmlFor? */}
                   <label className="form-check-label" htmlFor="exampleCheck1">Shoulders</label>
                 </div>
@@ -111,7 +166,8 @@ export class App extends Component {
                     className="form-check-input" 
                     name="armsCheck" 
                     checked={this.state.armsCheck}  
-                    onClick={this.handleChange}></input>
+                    onClick={this.handleChange}
+                    defaultChecked></input>
                   <label className="form-check-label" htmlFor="exampleCheck1">Arms</label>
                 </div>
               </div>
@@ -127,7 +183,8 @@ export class App extends Component {
                     className="form-check-input" 
                     name="quadsCheck" 
                     checked={this.state.quadsCheck}  
-                    onClick={this.handleChange}></input>
+                    onClick={this.handleChange}
+                    defaultChecked></input>
                   <label className="form-check-label" htmlFor="exampleCheck1">Quads</label>
                 </div>
               </div>
@@ -137,7 +194,8 @@ export class App extends Component {
                     className="form-check-input" 
                     name="hamstringsCheck" 
                     checked={this.state.hamstringsCheck}  
-                    onClick={this.handleChange}></input>
+                    onClick={this.handleChange}
+                    defaultChecked></input>
                   <label className="form-check-label" htmlFor="exampleCheck1">Hamstrings</label>
                 </div>
               </div>
@@ -147,7 +205,8 @@ export class App extends Component {
                     className="form-check-input" 
                     name="glutesCheck" 
                     checked={this.state.glutesCheck}  
-                    onClick={this.handleChange}></input>
+                    onClick={this.handleChange}
+                    defaultChecked></input>
                   <label className="form-check-label" htmlFor="exampleCheck1">Glutes</label>
                 </div>
               </div>
@@ -157,7 +216,8 @@ export class App extends Component {
                     className="form-check-input" 
                     name="calvesCheck" 
                     checked={this.state.calvesCheck}  
-                    onClick={this.handleChange}></input>
+                    onClick={this.handleChange}
+                    defaultChecked></input>
                   <label className="form-check-label" htmlFor="exampleCheck1">Calves</label>
                 </div>
               </div>
@@ -173,7 +233,8 @@ export class App extends Component {
                     className="form-check-input" 
                     name="steadyStateCheck" 
                     checked={this.state.steadyStateCheck}  
-                    onClick={this.handleChange}></input>
+                    onClick={this.handleChange}
+                    defaultChecked></input>
                   <label className="form-check-label" htmlFor="exampleCheck1">Steady State</label>
                 </div>
               </div>
@@ -193,7 +254,8 @@ export class App extends Component {
                     className="form-check-input" 
                     name="plyoCheck" 
                     checked={this.state.plyoCheck}  
-                    onClick={this.handleChange}></input>
+                    onClick={this.handleChange}
+                    defaultChecked></input>
                   <label className="form-check-label" htmlFor="exampleCheck1">Plyometrics</label>
                 </div>
               </div>
@@ -202,7 +264,7 @@ export class App extends Component {
             <div className="row justify-content-center" id="getExercises">
               <button type="button" 
                   className="btn btn-primary"
-                  onClick={this.btnUpdate}>
+                  onClick={this.getExercises}>
 
                     Get Exercises
               </button>
@@ -212,8 +274,17 @@ export class App extends Component {
                 <textarea className="form-control" 
                           id="exampleFormControlTextarea1" 
                           placeholder="get workout here..."
-                          rows="10" cols="100">{this.testMsg}</textarea>
+                          value={this.state.exerciseOutput}
+                          onChange={this.handleTextAreaChange}
+                          rows="10" cols="100"></textarea>
               </div>
+            </div>
+            <div className="row justify-content-center">
+              <button type="button" 
+                  className="btn btn-primary"
+                  onClick={this.clear}>
+                    Clear
+              </button>
             </div>
           </div>
         </div>
@@ -223,181 +294,3 @@ export class App extends Component {
 }
 
 export default App
-
-
-// put this in container
-/*
-<Container fixed style={styles.container}>
-
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              Exercise Generator
-          </Grid>
-            <Grid item xs={12} >
-              <Paper>
-                <h3>Upper Body</h3>
-                <FormGroup row>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.chestCheck}
-                        onChange={this.handleChange}
-                        name="chestCheck"
-                        color="primary"
-                      />
-                    }
-                    label="Chest"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.backCheck}
-                        onChange={this.handleChange}
-                        name="backCheck"
-                        color="primary"
-                      />
-                    }
-                    label="Back"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.shouldersCheck}
-                        onChange={this.handleChange}
-                        name="shouldersCheck"
-                        color="primary"
-                      />
-                    }
-                    label="Back"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.armsCheck}
-                        onChange={this.handleChange}
-                        name="armsCheck"
-                        color="primary"
-                      />
-                    }
-                    label="Arms"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.absCheck}
-                        onChange={this.handleChange}
-                        name="absCheck"
-                        color="primary"
-                      />
-                    }
-                    label="Abs"
-                  />
-                </FormGroup>
-              </Paper>
-            </Grid>
-
-            <Grid item xs={12}>
-            <Paper>
-                <h3>Lower Body</h3>
-                <FormGroup row>
-                <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.hipsCheck}
-                        onChange={this.handleChange}
-                        name="hipsCheck"
-                        color="primary"
-                      />
-                    }
-                    label="Hips"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.quadsCheck}
-                        onChange={this.handleChange}
-                        name="quadsCheck"
-                        color="primary"
-                      />
-                    }
-                    label="Quadriceps"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.hamstringsCheck}
-                        onChange={this.handleChange}
-                        name="hamstringsCheck"
-                        color="primary"
-                      />
-                    }
-                    label="Hamstrings"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.calvesCheck}
-                        onChange={this.handleChange}
-                        name="calvesCheck"
-                        color="primary"
-                      />
-                    }
-                    label="Calves"
-                  />
-                </FormGroup>
-              </Paper>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Paper>
-                <h3>Cardio/Plyometrics</h3>
-                <FormGroup row>
-                <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.steadyStateCardioCheck}
-                        onChange={this.handleChange}
-                        name="steadyStateCardioCheck"
-                        color="primary"
-                      />
-                    }
-                    label="Steady State Cardio"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.hiitCheck}
-                        onChange={this.handleChange}
-                        name="hiitCheck"
-                        color="primary"
-                      />
-                    }
-                    label="HIIT"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.plyoCheck}
-                        onChange={this.handleChange}
-                        name="plyoCheck"
-                        color="primary"
-                      />
-                    }
-                    label="Plyometrics"
-                  />
-                </FormGroup>
-              </Paper>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Button variant="contained" color="primary">
-                Get Workout
-      </Button>
-            </Grid>
-            <Grid item xs={12}>
-              <textarea id="textareahtml" rows="4" cols="150" placeholder="view workout here..."></textarea>
-            </Grid>
-          </Grid>
-
-        </Container>
-        */
