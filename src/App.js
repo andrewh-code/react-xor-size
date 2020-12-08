@@ -10,9 +10,16 @@ import Paper from '@material-ui/core/Paper';
 import { Checkbox, FormGroup, FormControlLabel } from '@material-ui/core';
 
 export class App extends Component {
-  domain ="http://localhost:5000";
-  apiPath = "/api/v1/exercises"
+  
+  
+    MAX_UB_COUNT = 2;
+    MAX_LB_COUNT = 2;
+    MAX_CARDIO_COUNT = 1;
+    LIMIT = 3;
 
+    domain ="http://localhost:5000";
+    apiPath = "/api/v1/exercises/random?muscle_group="; 
+  
   state = {
     // upper body
     chestCheck: false,
@@ -32,10 +39,16 @@ export class App extends Component {
     hiitCheck: false,
     plyoCheck: false,
 
+    // count
+    ubCount: 0,
+    lbCount: 0,
+    cardioCount: 0,
+
     exerciseOutput: "get workout here...",
     results: null,
     isCleared: true,
-    exercises: null
+    exercises: null,
+    endpointTest: null
   }
 
   handleChange = (e) => {
@@ -43,18 +56,97 @@ export class App extends Component {
       ...this.state,
       [e.target.name]: e.target.checked
     })
-    console.log(e.target.name);
-    console.log("hi");
   }
 
   handleTextAreaChange = () => {
     console.log(this.state.exercises)
   }
+  
+  buildEndpoint = () => {
+    
+    //http://localhost:5000/api/v1/exercises/random?
+    let endpoint = this.domain + this.apiPath;
+    const {
+      chestCheck,
+      backCheck,
+      armsCheck,
+      absCheck,
+      shouldersCheck,
+      glutesCheck,
+      quadsCheck,
+      hamstringsCheck,
+      calvesCheck,
+      steadyStateCheck,
+      hiitCheck,
+      plyoCheck
+    } = this.state
+    // let qpMap = new Map([
+    //   ['chest', chestCheck],['back', backCheck],['arms', armsCheck],['abs', absCheck],['shoulders', shouldersCheck],
+    //   ['glutes', glutesCheck],['quadriceps', quadsCheck],['hamstrings', hamstringsCheck],['calves', calvesCheck],
+    //   ['steadystate', steadyStateCheck],['hiit', hiitCheck],['plyo', plyoCheck]]);
+  
+    // for (const [k,v] of qpMap.entries()){
+    //   if (v){
+    //     if iterator
+    //     endpoint = endpoint.concat(k + ",")
+    //   }
+    // }
+    let qpArray = [];
+    if (chestCheck) 
+      qpArray.push("chest")
+    if (backCheck){
+      qpArray.push("back")
+    }
+    if (armsCheck){
+      qpArray.push("arms")
+    }
+    if (absCheck){
+      qpArray.push("abs")
+    }
+    if (shouldersCheck){
+      qpArray.push("shoulders")
+    }
+    if (glutesCheck){
+      qpArray.push("glutes")
+    }
+    if (quadsCheck){
+      qpArray.push("quadriceps")
+    }
+    if (hamstringsCheck){
+      qpArray.push("hamstrings")
+    }
+    if(calvesCheck){
+      qpArray.push("calves")
+    }
+    if(steadyStateCheck){
+      qpArray.push("steady")
+    }
+    if(hiitCheck){
+      qpArray.push("hiit")
+    }
+    if(plyoCheck){
+      qpArray.push("plyometrics")
+    }
+
+    for (let i = 0; i < qpArray.length; i++){
+      if (i === qpArray.length-1){
+        endpoint = endpoint.concat(qpArray[i]);
+      } else{
+        endpoint = endpoint.concat(qpArray[i] + ",");
+      }
+    }
+    endpoint = endpoint.concat("&limit=" + this.LIMIT);
+    console.log("this is the endpoint:" + endpoint);
+
+    return endpoint;
+  }
 
   getExercises = () => {
 
     const isCleared = this.state.isCleared;
-    const endpoint = this.domain + this.apiPath;
+    
+    let endpoint = this.buildEndpoint();
+    // build qp
     
     // axios
     if (isCleared){
@@ -68,6 +160,11 @@ export class App extends Component {
 
       }).catch((error) =>{
           // parse error here
+          this.setState ({
+            exerciseOutput: error.response.data.data
+          });
+          console.log(error.response.data.data);
+          console.log(error.response.status);
       });
     } 
   }
@@ -104,6 +201,11 @@ export class App extends Component {
   }
 
   render() {
+    const {
+      ubCount,
+      MAX_UB_COUNT,
+      endpointTest
+    } = this.state;
 
     const styles = {
       container: {
@@ -115,6 +217,7 @@ export class App extends Component {
         textAlign: 'cetner'
       }
     }
+    // const ubDisabledCheck = ubCount > MAX_UB_COUNT;
 
     return (
       <Fragment>
@@ -268,6 +371,7 @@ export class App extends Component {
 
                     Get Exercises
               </button>
+              <p>{endpointTest}</p>
             </div>
             <div className="row justify-content-center">
               <div className="form-group">
