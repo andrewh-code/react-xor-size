@@ -2,22 +2,15 @@ import React, { Fragment, Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { Checkbox, FormGroup, FormControlLabel } from '@material-ui/core';
 
 export class App extends Component {
-  
   
     MAX_UB_COUNT = 2;
     MAX_LB_COUNT = 2;
     MAX_CARDIO_COUNT = 1;
     LIMIT = 3;
 
-    domain ="http://localhost:5000";
+    domain = process.env.REACT_APP_API_URL + ":" + process.env.REACT_APP_API_PORT;
     apiPath = "/api/v1/exercises/random?muscle_group="; 
   
   state = {
@@ -48,7 +41,9 @@ export class App extends Component {
     results: null,
     isCleared: true,
     exercises: null,
-    endpointTest: null
+    endpointTest: null,
+    loading: true,
+    clicked: false
   }
 
   handleChange = (e) => {
@@ -64,7 +59,6 @@ export class App extends Component {
   
   buildEndpoint = () => {
     
-    //http://localhost:5000/api/v1/exercises/random?
     let endpoint = this.domain + this.apiPath;
     const {
       chestCheck,
@@ -80,17 +74,7 @@ export class App extends Component {
       hiitCheck,
       plyoCheck
     } = this.state
-    // let qpMap = new Map([
-    //   ['chest', chestCheck],['back', backCheck],['arms', armsCheck],['abs', absCheck],['shoulders', shouldersCheck],
-    //   ['glutes', glutesCheck],['quadriceps', quadsCheck],['hamstrings', hamstringsCheck],['calves', calvesCheck],
-    //   ['steadystate', steadyStateCheck],['hiit', hiitCheck],['plyo', plyoCheck]]);
-  
-    // for (const [k,v] of qpMap.entries()){
-    //   if (v){
-    //     if iterator
-    //     endpoint = endpoint.concat(k + ",")
-    //   }
-    // }
+
     let qpArray = [];
     if (chestCheck) 
       qpArray.push("chest")
@@ -136,87 +120,141 @@ export class App extends Component {
       }
     }
     endpoint = endpoint.concat("&limit=" + this.LIMIT);
-    console.log("this is the endpoint:" + endpoint);
+    
+    this.setState({
+      endpointTest: endpoint
+    });
 
     return endpoint;
   }
 
   getExercises = () => {
 
-    const isCleared = this.state.isCleared;
+    const {
+      isCleared,
+      clicked
+    } = this.state;
     
     let endpoint = this.buildEndpoint();
-    // build qp
     
+    this.setState({
+      clicked: !clicked
+    });
+
     // axios
     if (isCleared){
-      axios.get(endpoint).then(serverResponse =>{
+      // 10s time out
+      axios.get(endpoint, { timeout: 10000})
+        .then(serverResponse =>{
         let data = serverResponse.data;       
-        this.processData(data.data)
+        let output = this.processData(data.data);
+        console.log("here");
         this.setState({
           exercises: data.data,
-          isCleared: false
+          exerciseOutput: output,
+          isCleared: false,
+          loading: false
         });
-
       }).catch((error) =>{
           // parse error here
+          let errorMsg = "";
+          if (error.response && error.response.data) {
+              errorMsg = error.response.data.data;
+          } else {
+            errorMsg = "unable to contact backend service...";
+          }
           this.setState ({
-            exerciseOutput: error.response.data.data
+            exerciseOutput: errorMsg
           });
-          console.log(error.response.data.data);
-          console.log(error.response.status);
       });
     } 
   }
 
   processData = (data) => {
-    console.log(data)
+    let varcharLimit = 100;
+    let ubExercises = data[0].exercises;
+    let lbExercises = data[1].exercises;
+    let cardioExercises = data[2].exercises;
+    let output = "";
+    let divider = "=============================================";
+    let columnArray = ['reps x sets', 'exercise', 'muscle group', 'youtube link'];
+    let header = "reps x sets \t| exercise \t| muscle group \t| youtube \t\n";
+    output = output.concat(header);
+    
+    ubExercises.forEach(ex => {
+      let name = ex.exercise_name;
+      let type = ex.exercise_type;
+      let muscle = ex.muscle_group;
+      let youtube = ex.youtube_link;
+      let repsSets = "3x10";
+
+      let row = `${repsSets} \t| ${name} \t| ${muscle} \t| ${youtube} \t\n`
+      output = output.concat(row);
+    });
+    output.concat(divider);
+    lbExercises.forEach(ex => {
+      let name = ex.exercise_name;
+      let muscle = ex.muscle_group;
+      let youtube = ex.youtube_link;
+      let repsSets = "3x10";
+
+      let row = `${repsSets} \t| ${name} \t| ${muscle} \t| ${youtube} \t\n`
+      output = output.concat(row);
+    });
+    output.concat(divider);
+    cardioExercises.forEach(ex => {
+      let name = ex.exercise_name;
+      let type = ex.exercise_type;
+      let muscle = ex.muscle_group;
+      let youtube = ex.youtube_link;
+      let repsSets = "3x10";
+
+      let row = `${repsSets} \t| ${name} \t| ${muscle} \t| ${youtube} \t\n`
+      output = output.concat(row);
+    });
+    console.log(output)
+    
+    return output;
   }
 
   clear = () => {
     // clear all values
     this.setState ({
       // upper body
-    chestCheck: false,
-    backCheck: false,
-    armsCheck: false,
-    absCheck: false,
-    shouldersCheck: false,
+      chestCheck: false,
+      backCheck: false,
+      armsCheck: false,
+      absCheck: false,
+      shouldersCheck: false,
 
-    // lower body
-    glutesCheck: false,
-    quadsCheck: false,
-    hamstringsCheck: false,
-    calvesCheck: false,
+      // lower body
+      glutesCheck: false,
+      quadsCheck: false,
+      hamstringsCheck: false,
+      calvesCheck: false,
 
-    // cardio
-    steadyStateCheck: false,
-    hiitCheck: false,
-    plyoCheck: false,
+      // cardio
+      steadyStateCheck: false,
+      hiitCheck: false,
+      plyoCheck: false,
 
-    exerciseOutput: "get workout here...",
-    exercises: null,
-    isCleared: true
+      exerciseOutput: "get workout here...",
+      exercises: null,
+      isCleared: true,
+      endpointTest: null,
+      loading: false,
+      clicked: false,
     });
   }
 
   render() {
     const {
-      ubCount,
-      MAX_UB_COUNT,
-      endpointTest
+      endpointTest,
+      loading,
+      clicked
     } = this.state;
 
-    const styles = {
-      container: {
-        background: '50%',
-        backgroundColor: fade('#D6D9D6', 0.5),
-        height: '100vh'
-      },
-      paper: {
-        textAlign: 'cetner'
-      }
-    }
+    const loadingMsg = "retrieving exercises...";
     // const ubDisabledCheck = ubCount > MAX_UB_COUNT;
 
     return (
@@ -226,10 +264,10 @@ export class App extends Component {
 
             <h3>Exercise Generator</h3>
             <hr id="title"></hr>
-            <div className="row border">
+            <div className="row">
             <h4>Upper Body</h4>
             </div>
-            <div className="row border">
+            <div className="row">
               <div className="col-sm-3">
                 <div className="form-check">
                   <input type="checkbox" 
@@ -368,9 +406,11 @@ export class App extends Component {
               <button type="button" 
                   className="btn btn-primary"
                   onClick={this.getExercises}>
-
                     Get Exercises
               </button>
+              
+            </div>
+            <div className="row justify-content-center">
               <p>{endpointTest}</p>
             </div>
             <div className="row justify-content-center">
@@ -378,7 +418,7 @@ export class App extends Component {
                 <textarea className="form-control" 
                           id="exampleFormControlTextarea1" 
                           placeholder="get workout here..."
-                          value={this.state.exerciseOutput}
+                          value={ this.state.exerciseOutput }
                           onChange={this.handleTextAreaChange}
                           rows="10" cols="100"></textarea>
               </div>
