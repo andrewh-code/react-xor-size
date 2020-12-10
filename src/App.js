@@ -1,5 +1,4 @@
 import React, { Fragment, Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 
@@ -171,7 +170,6 @@ export class App extends Component {
   }
 
   processData = (data) => {
-    let varcharLimit = 100;
     let ubExercises = data[0].exercises;
     let lbExercises = data[1].exercises;
     let cardioExercises = data[2].exercises;
@@ -183,7 +181,6 @@ export class App extends Component {
     
     ubExercises.forEach(ex => {
       let name = ex.exercise_name;
-      let type = ex.exercise_type;
       let muscle = ex.muscle_group;
       let youtube = ex.youtube_link;
       let repsSets = "3x10";
@@ -204,7 +201,6 @@ export class App extends Component {
     output.concat(divider);
     cardioExercises.forEach(ex => {
       let name = ex.exercise_name;
-      let type = ex.exercise_type;
       let muscle = ex.muscle_group;
       let youtube = ex.youtube_link;
       let repsSets = "3x10";
@@ -418,7 +414,7 @@ export class App extends Component {
                 <textarea className="form-control" 
                           id="exampleFormControlTextarea1" 
                           placeholder="get workout here..."
-                          value={ this.state.exerciseOutput }
+                          value={ (loading && clicked) ? loadingMsg : this.state.exerciseOutput }
                           onChange={this.handleTextAreaChange}
                           rows="10" cols="100"></textarea>
               </div>
