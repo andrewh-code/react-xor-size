@@ -8,6 +8,16 @@ The following project is an exercise generator that was created to randomly gene
 ### Tech Stack
 This website was built using the following tech stack
 
+#### Concepts
+- REST API development (CRUD for the backend)
+    - use of query parameters, path variables
+    - retrieve exercises by ID and by muscle group
+    - file upload (ie. insert entries into database through a csv file upload)
+    - deleting execises by ID
+- databse ORM
+- MVC model with the use of a service/datamapper layer in Python/Flask 
+
+
 #### Front-End
 - React + JSX
     - Create-React-App
@@ -20,7 +30,7 @@ This website was built using the following tech stack
 - Python 3.6
 - Flask
     - Flask SQLAlchemy (database orm)
-- SQLite 
+- SQL using SQLite database
 - repo: https://github.com/andrewh-code/python-xor-size
 
 ### How To run:
