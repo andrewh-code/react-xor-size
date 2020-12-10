@@ -21,6 +21,7 @@ This website was built using the following tech stack
 - Flask
     - Flask SQLAlchemy (database orm)
 - SQLite 
+- repo: https://github.com/andrewh-code/python-xor-size
 
 ### How To run:
 
